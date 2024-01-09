@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script>
+        // カスタムシステムの定義
+        AFRAME.registerSystem('custom-system', {
+            init: function () {
+                // システム初期化時のコード
+                this.counter = 0;
+            },
+            tick: function (time, timeDelta) {
+                // 毎フレームごとの更新処理
+                this.counter += timeDelta;
+                if (this.counter >= 2000) { // 2秒ごとに
+                    var sceneEl = this.el;
+                    var box = sceneEl.querySelector('#box');
+                    var color = box.getAttribute('material').color === 'blue' ? 'red' : 'blue';
+                    box.setAttribute('material', 'color', color); // 色を変更
+                    this.counter = 0;
+                }
+            }
+        });
+
+        // カスタムコンポーネントの定義
+        AFRAME.registerComponent('rotate', {
+            schema: {type: 'number', default: 1},
+            tick: function (time, timeDelta) {
+                // 回転スピードを制御
+                var rotation = this.el.object3D.rotation;
+                rotation.y += this.data * (timeDelta / 1000);
+            }
+        });
+    </script>
+</head>
+<body>
+    <a-scene custom-system>
+        <!-- 回転する箱 -->
+        <a-box id="box" position="-1 0.5 -3" rotation="0 45 0" color="blue" rotate="0.5"></a-box>
+        
+        <!-- 静止する球体 -->
+        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+        
+        <!-- 環境 -->
+        <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+</body>
+</html>

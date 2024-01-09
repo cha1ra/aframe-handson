@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>カスタムコンポーネントの例</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script>
+      // カスタムコンポーネントの登録
+      AFRAME.registerComponent('rotate', {
+        schema: {
+          speed: {type: 'number', default: 1}
+        },
+        init: function () {
+          console.log('Rotate Component initialized');
+        },
+        tick: function (time, deltaTime) {
+          var rotation = this.el.object3D.rotation;
+          rotation.y += this.data.speed * deltaTime / 1000;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" rotate="speed: 0.5"></a-box>
+    </a-scene>
+  </body>
+</html>

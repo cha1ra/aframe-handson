@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>3Dモデルとアニメーションの例</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- アセットの読み込み -->
+      <a-assets>
+        <a-asset-item id="myModel" src="./assets/enachi.glb"></a-asset-item>
+      </a-assets>
+
+      <!-- 3Dモデルのエンティティ -->
+      <a-entity gltf-model="#myModel" position="0 0 -5" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"></a-entity>
+    </a-scene>
+  </body>
+</html>
